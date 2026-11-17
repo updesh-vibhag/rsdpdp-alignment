@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DPDP Alignment Assessment — rsdpdp_db</title>
+  <style>
+
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">
+:root {
+--ink: #132335;
+--muted: #52657a;
+--paper: #f5f7f8;
+--panel: #ffffff;
+--rule: #d7e0e8;
+--blue: #075985;
+--blue-pale: #e5f3fa;
+--amber: #b45309;
+--amber-pale: #fff3dd;
+--red: #b42318;
+--red-pale: #fff0ef;
+--green: #237a57;
+--green-pale: #e9f7ef;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+max-width: 1220px;
+margin: 0 auto;
+padding: 52px clamp(20px, 5vw, 76px) 88px;
+color: var(--ink);
+background: var(--panel);
+font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+font-size: 15px;
+line-height: 1.62;
+}
+h1, h2, h3 { line-height: 1.18; letter-spacing: -0.025em; }
+h1 {
+margin: 0 0 26px;
+padding: 0 0 24px 26px;
+border-left: 9px solid var(--blue);
+border-bottom: 1px solid var(--rule);
+color: #0b2136;
+font-size: clamp(2.15rem, 4vw, 3.55rem);
+font-weight: 760;
+}
+h2 {
+margin: 56px 0 18px;
+padding-bottom: 10px;
+border-bottom: 2px solid var(--blue);
+color: #0b3857;
+font-size: 1.55rem;
+}
+h3 { margin: 32px 0 10px; color: #174c70; font-size: 1.13rem; }
+p { margin: 0 0 15px; }
+blockquote {
+margin: 28px 0;
+padding: 18px 22px;
+border: 1px solid #b9d9e9;
+border-left: 5px solid var(--blue);
+background: var(--blue-pale);
+color: #143d58;
+font-size: 1.04rem;
+}
+blockquote p:last-child { margin-bottom: 0; }
+a { color: var(--blue); text-underline-offset: 0.18em; }
+hr { height: 1px; margin: 42px 0; border: 0; background: var(--rule); }
+code {
+padding: 0.08em 0.32em;
+border-radius: 3px;
+background: #edf2f5;
+color: #263c52;
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+font-size: 0.9em;
+}
+pre {
+overflow-x: auto;
+padding: 18px;
+border: 1px solid #ccd8e2;
+border-radius: 5px;
+background: #f3f6f8;
+line-height: 1.45;
+}
+pre code { padding: 0; background: none; }
+table {
+display: block;
+width: 100%;
+overflow-x: auto;
+margin: 20px 0 30px;
+border-collapse: collapse;
+border: 1px solid var(--rule);
+font-size: 0.9rem;
+}
+th, td { min-width: 105px; padding: 10px 12px; vertical-align: top; text-align: left; border: 1px solid var(--rule); }
+th { background: #eaf1f5; color: #153a58; font-weight: 700; }
+tr:nth-child(even) td { background: #fbfcfd; }
+ul, ol { margin: 0 0 18px; padding-left: 1.45rem; }
+li { margin: 0.32em 0; }
+strong { color: #112e47; }
+
+td strong { font-weight: 750; }
+@media (max-width: 700px) {
+body { padding: 32px 18px 54px; font-size: 14px; }
+h1 { padding-left: 18px; border-left-width: 6px; }
+h2 { margin-top: 40px; }
+th, td { min-width: 135px; padding: 8px 9px; }
+}
+@media print {
+@page { size: A4; margin: 15mm; }
+html, body { max-width: none; background: #fff; }
+body { padding: 0; font-size: 10pt; }
+h1 { font-size: 25pt; }
+h2 { margin-top: 26pt; break-after: avoid; }
+h3 { break-after: avoid; }
+table { font-size: 8pt; break-inside: avoid; }
+tr { break-inside: avoid; }
+a { color: inherit; text-decoration: none; }
+}
+/* Interactive report controls */
+.skip-link { position:absolute; left:-999px; top:8px; z-index:20; padding:10px 14px; background:#fff; color:var(--ink); border:2px solid var(--blue); }
+.skip-link:focus { left:12px; }
+.report-console { margin: 0 0 42px; border: 1px solid #c4d7e4; background: linear-gradient(135deg, #f6fbfe 0%, #eef7fb 100%); box-shadow: 0 12px 30px rgba(24, 70, 97, .08); }
+.console-top { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:14px 20px; background:#103a57; color:#eaf7ff; }
+.console-kicker { margin:0; font-size:.75rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+.console-top button { min-height:40px; padding:8px 13px; border:1px solid #91bcd3; background:transparent; color:#fff; font:inherit; font-weight:700; cursor:pointer; }
+.console-top button:hover { background:#1b577b; }
+.console-body { padding: 22px 22px 20px; }
+.console-heading { margin:0 0 7px; color:#103a57; font-size:1.4rem; }
+.console-copy { max-width:75ch; margin:0 0 18px; color:#38566c; }
+.issue-grid { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:10px; margin:0 0 18px; }
+.issue-card { min-height:112px; padding:14px; border:1px solid #e4bcb5; background:#fff9f8; color:#5d1c16; text-align:left; font:inherit; cursor:pointer; }
+.issue-card:hover { border-color:#b74638; box-shadow:0 4px 12px rgba(124,35,25,.12); }
+.issue-card b { display:block; margin-bottom:4px; font-size:.93rem; }
+.issue-card span { display:block; color:#74423c; font-size:.79rem; line-height:1.35; }
+.filter-bar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding-top:16px; border-top:1px solid #cfe0ea; }
+.filter-label { margin-right:3px; color:#38566c; font-size:.83rem; font-weight:750; }
+.filter-chip { min-height:42px; padding:8px 12px; border:1px solid #aac4d3; border-radius:999px; background:#fff; color:#1b4964; font:inherit; font-size:.84rem; font-weight:700; cursor:pointer; }
+.filter-chip[aria-pressed="true"] { border-color:#075985; background:#075985; color:#fff; }
+.filter-chip:hover { border-color:#075985; }
+.report-search { min-width:min(100%, 270px); min-height:42px; margin-left:auto; padding:9px 12px; border:1px solid #8baabb; border-radius:3px; color:var(--ink); background:#fff; font:inherit; }
+#report-status { display:block; min-height:1.4em; margin-top:11px; color:#476276; font-size:.84rem; }
+.report-console + h1 { margin-top:0; }
+.status-gap { box-shadow: inset 4px 0 0 var(--red); }
+.status-partial { box-shadow: inset 4px 0 0 var(--amber); }
+.status-positive { box-shadow: inset 4px 0 0 var(--green); }
+tr.is-filtered { display:none; }
+.focus-section { animation: sectionPulse 1.4s ease-out; }
+@keyframes sectionPulse { 0% { background:#fff3d3; } 100% { background:transparent; } }
+button:focus-visible, input:focus-visible, .issue-card:focus-visible { outline:3px solid #f59e0b; outline-offset:3px; }
+@media (max-width: 920px) { .issue-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); } .report-search { width:100%; margin-left:0; } }
+@media (max-width: 560px) { .console-top { align-items:flex-start; flex-direction:column; } .console-body { padding:17px; } .issue-grid { grid-template-columns:1fr; } .filter-bar { align-items:stretch; } .filter-chip { flex:1 0 auto; } }
+@media (prefers-reduced-motion: reduce) { .focus-section { animation:none; } }
+@media print { .report-console, .skip-link { display:none; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#report-main">Skip report controls</a>
+<section class="report-console" aria-labelledby="issue-summary-title">
+  <div class="console-top">
+    <p class="console-kicker">Interactive compliance briefing</p>
+    <button type="button" id="print-report">Print / save PDF</button>
+  </div>
+  <div class="console-body">
+    <h2 class="console-heading" id="issue-summary-title">What needs attention first</h2>
+    <p class="console-copy">This report identifies a compliance-oriented foundation, but five gaps prevent the current schema from being DPDP-ready. Use the issue cards to jump to the relevant analysis, or filter the assessment tables below.</p>
+    <div class="issue-grid" aria-label="Five highest-priority issues">
+      <button class="issue-card" type="button" data-target="41-consent_ledger-useful-foundation-but-not-a-legally-complete-consent-history"><b>1 — Consent history</b><span>One row per purpose cannot prove withdrawal and fresh re-consent.</span></button>
+      <button class="issue-card" type="button" data-target="3-detailed-gap-analysis"><b>2 — Children’s data</b><span>Guardian verification is not tied to a child consent event.</span></button>
+      <button class="issue-card" type="button" data-target="42-person_biometric_vault-highest-priority-remediation"><b>3 — Biometrics</b><span>Templates and images need vault-level isolation and encryption evidence.</span></button>
+      <button class="issue-card" type="button" data-target="5-priority-remediation-plan"><b>4 — Erasure</b><span>No cross-system suppression and deletion case tracks every copy.</span></button>
+      <button class="issue-card" type="button" data-target="3-detailed-gap-analysis"><b>5 — Governance</b><span>Breach, processor, transfer and security evidence are not represented.</span></button>
+    </div>
+    <div class="filter-bar" aria-label="Assessment filters">
+      <span class="filter-label">Show:</span>
+      <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All findings</button>
+      <button class="filter-chip" type="button" data-filter="priority" aria-pressed="false">Priority gaps</button>
+      <button class="filter-chip" type="button" data-filter="partial" aria-pressed="false">Partial alignment</button>
+      <input class="report-search" id="report-search" type="search" placeholder="Search assessment tables" aria-label="Search assessment tables" />
+    </div>
+    <output id="report-status" aria-live="polite">Showing all assessed findings.</output>
+  </div>
+</section>
+<main id="report-main" tabindex="-1">
+<h1 id="dpdp-alignment-assessment--rsdpdp_db">DPDP Alignment Assessment
+— <code>rsdpdp_db</code></h1>
+<p><strong>Assessed artefact:</strong>
+<code>dump-rsdpdp_db-202611171147.sql</code><br />
+<strong>Assessment scope:</strong> Database schema and the sample rows
+in the supplied MySQL dump only. This report does <strong>not</strong>
+assess application logic, API controls, deployed encryption/KMS
+configuration, access-control grants, S3/object storage, Data Processor
+contracts, incident procedures, backups, notices themselves, or actual
+operational practices.<br />
+<strong>Assessment date:</strong> 17 November 2026 (based on the dump
+timestamp)<br />
+<strong>Legal framework:</strong> Digital Personal Data Protection Act,
+2023 (DPDPA) and Digital Personal Data Protection Rules, 2025 (DPDP
+Rules). Full substantive compliance is due from <strong>13 May
+2027</strong>; this should therefore be treated as a remediation plan,
+not a statement of compliance.</p>
+<blockquote>
+<p><strong>Overall conclusion — partially aligned, not
+DPDP-ready.</strong><br />
+The schema demonstrates good awareness of consent, rights, grievance
+handling, guardian relationships, auditability, maker/checker controls,
+and planned purging. However, it has material gaps in consent lifecycle
+design, children’s-data verification, security architecture, biometric
+isolation, retention/erasure orchestration, Data Processor governance,
+breach handling, and documentation of lawful basis/purpose limitation.
+The presence of a “DPDP database” does not itself establish
+compliance.</p>
+</blockquote>
+<p>This is compliance engineering guidance, not legal advice. Confirm
+retention, consent wording, biometric processing, and any Section 7
+legitimate-use position with qualified Indian counsel.</p>
+<hr />
+<h2 id="1-executive-scorecard">1. Executive scorecard</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>DPDPA / Rules</th>
+<th style="text-align: right;">Assessment</th>
+<th>Status</th>
+<th>Principal evidence / issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Digital-personal-data inventory</td>
+<td>Sections 2(t), 3, 8</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Partial</strong></td>
+<td>21 of the 26 tables contain or link to personal data; the schema has
+no processing inventory, data classification, or data-flow
+register.</td>
+</tr>
+<tr>
+<td>Purpose and lawful basis</td>
+<td>Sections 4, 6, 7</td>
+<td style="text-align: right;">Weak</td>
+<td><strong>Gap</strong></td>
+<td><code>purpose_master</code> identifies purposes, but it does not
+record whether each activity relies on Section 6 consent or a specific
+Section 7 legitimate use.</td>
+</tr>
+<tr>
+<td>Notice</td>
+<td>Section 5; Rule 3</td>
+<td style="text-align: right;">Partial / untestable</td>
+<td><strong>Partial</strong></td>
+<td>Versioned <code>notice_consent_text</code> and hashes exist, but
+only a <code>text_ref</code> is stored. The notice contents and Rule 3
+requirements cannot be verified from the dump.</td>
+</tr>
+<tr>
+<td>Valid consent lifecycle</td>
+<td>Section 6</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Material gap</strong></td>
+<td><code>consent_ledger</code> tracks grant/withdrawal, but
+<code>UNIQUE (conv_id, purpose_id)</code> prevents a complete grant →
+withdrawal → re-consent history.</td>
+</tr>
+<tr>
+<td>Consent withdrawal / cessation</td>
+<td>Section 6(4), Section 8</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Material gap</strong></td>
+<td><code>WITHDRAWN</code> exists, but no cross-table
+suppression/deletion workflow exists. Cards, biometrics, profiles,
+documents, logs and downstream copies are not centrally linked to
+erasure.</td>
+</tr>
+<tr>
+<td>General Data Fiduciary safeguards</td>
+<td>Section 8; Rule 7</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Material gap</strong></td>
+<td>Keys and hashes are referenced, but the schema does not prove
+encryption, KMS controls, MFA, least privilege, logging controls, or
+security testing.</td>
+</tr>
+<tr>
+<td>Data quality</td>
+<td>Section 8</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Partial</strong></td>
+<td>There are status and relationship constraints, but no reliable
+correction/version model for primary profile/contact data.</td>
+</tr>
+<tr>
+<td>Retention and erasure</td>
+<td>Section 8(7)</td>
+<td style="text-align: right;">Weak</td>
+<td><strong>Gap</strong></td>
+<td>A few fields (<code>purge_due_at</code>, <code>date_close</code>,
+biometric soft-delete) exist; there is no policy-driven, cross-system
+retention/erasure ledger.</td>
+</tr>
+<tr>
+<td>Children’s data</td>
+<td>Section 9; Rules 10 and 12</td>
+<td style="text-align: right;">Weak</td>
+<td><strong>Material gap</strong></td>
+<td><code>is_minor</code> and <code>person_guardianship</code> exist,
+but no verifiable guardian-consent workflow is linked to the child’s
+consent event.</td>
+</tr>
+<tr>
+<td>Data Principal rights</td>
+<td>Sections 11–14; Rule 17</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Partial</strong></td>
+<td><code>data_principal_rights_request</code>,
+<code>grievance_ticket</code>, and <code>person_nomination</code> are
+strong foundations; identity verification, export, completion, and
+erasure execution are not evidenced.</td>
+</tr>
+<tr>
+<td>Grievance redressal</td>
+<td>Section 13; Rule 17</td>
+<td style="text-align: right;">Partial</td>
+<td><strong>Partial</strong></td>
+<td>Ticket, status, SLA and GRO assignment exist. Escalation/outcome
+evidence and Board-complaint information are not evidenced.</td>
+</tr>
+<tr>
+<td>Breach notification</td>
+<td>Section 8; Rule 6</td>
+<td style="text-align: right;">Not evidenced</td>
+<td><strong>Gap</strong></td>
+<td>No personal-data-breach register, Board-notification record, Data
+Principal notification record, or 72-hour workflow is present.</td>
+</tr>
+<tr>
+<td>Data Processor controls</td>
+<td>Section 8(1); Rule 16</td>
+<td style="text-align: right;">Not evidenced</td>
+<td><strong>Gap</strong></td>
+<td>No processor register, DPA/contract register, sub-processor record,
+deletion instruction, or audit-right evidence.</td>
+</tr>
+<tr>
+<td>Cross-border transfers</td>
+<td>Section 16</td>
+<td style="text-align: right;">Not evidenced</td>
+<td><strong>Gap</strong></td>
+<td>No transfer inventory, destination record, processor linkage, or
+restriction-control evidence.</td>
+</tr>
+<tr>
+<td>SDF readiness</td>
+<td>Section 10; Rule 13, if designated</td>
+<td style="text-align: right;">Not evidenced</td>
+<td><strong>Gap / conditional</strong></td>
+<td>No DPO, DPIA, independent-audit or localisation-governance record.
+This applies if the organisation is notified as a Significant Data
+Fiduciary.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-what-personal-data-is-present">2. What personal data is
+present</h2>
+<p>Under Section 2(t), personal data includes data about an individual
+who is identifiable by or in relation to the data. A
+<code>conv_id</code>, card tag, biometric reference, contact detail,
+role history, or workflow record remains personal data when it can be
+linked back to a person.</p>
+<h3 id="table-level-classification">Table-level classification</h3>
+<table>
+<thead>
+<tr>
+<th>Classification</th>
+<th>Tables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direct / high-risk PI</strong></td>
+<td><code>person</code>, <code>satsang_community</code>,
+<code>person_biometric_vault</code>, <code>person_guardianship</code>,
+<code>person_login</code>, <code>person_nomination</code>,
+<code>updesh</code>, <code>epeshi</code>, <code>grievance_ticket</code>,
+<code>data_principal_rights_request</code></td>
+</tr>
+<tr>
+<td><strong>Pseudonymous or person-linked PI</strong></td>
+<td><code>access_permission</code>, <code>affiliation_change</code>,
+<code>change_history</code>, <code>compliance_audit_log</code>,
+<code>consent_ledger</code>, <code>meal_card</code>,
+<code>nfc_card</code>, <code>person_merge_history</code>,
+<code>person_role</code>, <code>person_status_change</code>,
+<code>transactional_users</code></td>
+</tr>
+<tr>
+<td><strong>Reference/policy data, but with some actor
+metadata</strong></td>
+<td><code>code_master</code>, <code>location</code>,
+<code>notice_consent_text</code>, <code>purpose_master</code>,
+<code>role</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="highest-risk-data-categories-found">Highest-risk data categories
+found</h3>
+<table>
+<thead>
+<tr>
+<th>Data category</th>
+<th>Where found</th>
+<th>Risk notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Biometrics</td>
+<td><code>person_biometric_vault</code></td>
+<td>Fingerprint templates, biometric images, face identifiers and
+DOB-validation data. This requires the strongest controls.</td>
+</tr>
+<tr>
+<td>Government identifiers</td>
+<td><code>satsang_community.aadhaar_number</code>,
+<code>national_id</code>, <code>govt_ids</code></td>
+<td><code>VARBINARY</code> does not by itself prove encryption.
+Aadhaar/national-ID storage needs strict necessity, encryption, access,
+and retention controls.</td>
+</tr>
+<tr>
+<td>Children / guardian data</td>
+<td><code>person.is_minor</code>, <code>person_guardianship</code>,
+<code>satsang_community</code>, <code>consent_ledger</code></td>
+<td>A child flag and guardianship relationship exist, but verifiable
+guardian consent is not evidenced.</td>
+</tr>
+<tr>
+<td>Health / disability</td>
+<td><code>person.is_disabled</code>,
+<code>epeshi.is_covid_negative</code>,
+<code>updesh.health_declaration</code></td>
+<td>High-impact PI requiring strict purpose limitation and access
+controls.</td>
+</tr>
+<tr>
+<td>Financial data</td>
+<td><code>updesh.monthly_income</code>, <code>household_income</code>;
+<code>meal_card.subsidy</code></td>
+<td>Purpose and retention must be clearly documented.</td>
+</tr>
+<tr>
+<td>Religious/community participation</td>
+<td><code>membership_type</code>, <code>satsang_community</code>,
+<code>updesh</code>, <code>seva_details</code>, attendance/visit
+JSON</td>
+<td>Although DPDPA has no separate sensitive-data category, this is
+high-impact and needs heightened governance.</td>
+</tr>
+<tr>
+<td>Authentication/security data</td>
+<td><code>person_login.password_hash</code>, <code>last_login_ip</code>;
+card tags/IDs</td>
+<td>Password hashes and card identifiers need security-domain isolation
+and defined retention.</td>
+</tr>
+<tr>
+<td>Unstructured PI</td>
+<td>JSON, <code>TEXT</code>, free-form reason fields, document
+references</td>
+<td>These fields can silently duplicate a full personal profile and must
+be treated as PI by default.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-detailed-gap-analysis">3. Detailed gap analysis</h2>
+<table>
+<thead>
+<tr>
+<th>Section / Rule</th>
+<th>Obligation</th>
+<th>Status</th>
+<th>Evidence found in dump</th>
+<th>Gap notes / required remediation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Section 4</td>
+<td>Process only with consent or a specific Section 7 legitimate
+use.</td>
+<td>Gap</td>
+<td><code>purpose_master</code> defines purposes such as
+<code>PERSON_CORE</code>, <code>SATSANG_MEMBERSHIP</code>,
+<code>UPDESH</code>, and <code>MEAL_CARD</code>.</td>
+<td>Add a purpose-processing register: processing activity, data
+categories, Data Principals, lawful basis (<code>CONSENT</code> or exact
+Section 7 clause), recipients, retention, and owner. Do not treat
+<code>is_core</code> as a lawful basis.</td>
+</tr>
+<tr>
+<td>Section 5; Rule 3</td>
+<td>Give a standalone, clear notice before/at collection, including data
+items, purposes, recipients, retention, rights, withdrawal, and Board
+complaint route.</td>
+<td>Partial</td>
+<td><code>notice_consent_text</code> stores version, language, hash,
+dates and a document reference.</td>
+<td>The actual notice text is not stored; only <code>text_ref</code> is
+visible. Versioned documents are positive, but review the actual notices
+against every Rule 3 item. Record the exact notice version shown to each
+Data Principal.</td>
+</tr>
+<tr>
+<td>Section 6</td>
+<td>Consent must be free, specific, informed, unconditional,
+unambiguous, and by clear affirmative action.</td>
+<td>Partial</td>
+<td><code>consent_ledger</code> has purpose, granted/declined fields,
+status, version, validity and withdrawal timestamps.</td>
+<td>Add capture method, affirmative-action evidence, notice presentation
+record, consent locale, actor/guardian relationship, verification
+evidence, and a consent-event history. Avoid generic field-level consent
+where the real processing purpose is broader.</td>
+</tr>
+<tr>
+<td>Section 6(4)</td>
+<td>Withdrawal must be as easy as giving consent; processing must cease
+and data be erased unless retention is required by law.</td>
+<td>Material gap</td>
+<td><code>consent_ledger.status</code> supports <code>WITHDRAWN</code>;
+<code>person.date_close</code>/<code>close_type</code> and some purge
+fields exist.</td>
+<td>No evidence of a central suppression/erasure workflow covering
+profile, contacts, documents, biometrics, cards, audit detail, JSON,
+downstream integrations, or backups. Add <code>erasure_case</code> and
+<code>erasure_item</code> tables and an execution service.</td>
+</tr>
+<tr>
+<td>Section 7</td>
+<td>Legitimate uses are a closed statutory list.</td>
+<td>Gap</td>
+<td>None.</td>
+<td>Where consent is not used, record the exact Section 7 clause and
+factual justification. Do not use generic “core” or “business need” as a
+substitute.</td>
+</tr>
+<tr>
+<td>Section 8</td>
+<td>Use processors only under contract; maintain data quality; implement
+reasonable safeguards; erase on purpose completion.</td>
+<td>Partial</td>
+<td>Status checks, maker/checker checks, some hashes, key IDs, and purge
+fields exist.</td>
+<td>Add processor/DPA registry, data-quality/correction history,
+access-control evidence, encryption metadata, retention policy, and
+cross-system deletion controls.</td>
+</tr>
+<tr>
+<td>Rule 7</td>
+<td>Implement reasonable security safeguards.</td>
+<td>Material gap</td>
+<td><code>person_login</code> uses <code>ARGON2ID</code>;
+<code>change_history</code> references <code>key_id</code>;
+<code>compliance_audit_log</code> has hash fields.</td>
+<td>Schema does not prove encryption at rest, KMS controls, separation
+of duties, MFA, log access restrictions, vulnerability testing, backups,
+or incident response. <code>VARBINARY</code>/<code>BLOB</code> are not
+encryption controls.</td>
+</tr>
+<tr>
+<td>Section 8; Rule 6</td>
+<td>Notify personal data breaches to the Board without delay and within
+72 hours; notify affected Data Principals as required.</td>
+<td>Gap</td>
+<td>None.</td>
+<td>Add breach incident, affected-Data-Principal, Board notice, Data
+Principal notice, timeline, root-cause, and remediation records.
+Implement and test a 72-hour incident workflow.</td>
+</tr>
+<tr>
+<td>Section 9; Rules 10 and 12</td>
+<td>Obtain verifiable parental/lawful guardian consent before processing
+a child’s personal data; protect children from prohibited tracking,
+behavioural monitoring and targeted advertising.</td>
+<td>Material gap</td>
+<td><code>person.is_minor</code>; <code>person_guardianship</code>
+identifies a guardian and proof document; consent rows exist.</td>
+<td>The schema does not link a child’s consent record to a verified
+guardian or guardian-verification method. Add guardian consent linkage,
+authority verification method, evidence reference, age-verification
+evidence, and re-consent/reassessment when the child becomes an adult.
+Absence of advertising fields does not prove compliance with the
+tracking/advertising prohibition.</td>
+</tr>
+<tr>
+<td>Sections 11–12</td>
+<td>Enable access and correction/completion/updating/erasure
+rights.</td>
+<td>Partial</td>
+<td><code>data_principal_rights_request</code> supports
+<code>ACCESS</code>, <code>CORRECTION</code>, <code>ERASURE</code>,
+<code>NOMINATION</code>, workflow statuses, SLA and maker/checker.</td>
+<td>Add request identity-verification result, scoped data-location
+search, response/export reference, completion evidence, correction
+implementation record, erasure itemisation, rejection/legal-retention
+reason, and notification delivery record.</td>
+</tr>
+<tr>
+<td>Section 13; Rule 17</td>
+<td>Provide grievance redressal before Board complaint.</td>
+<td>Partial</td>
+<td><code>grievance_ticket</code> includes status, category, SLA, GRO
+assignment and resolution fields.</td>
+<td>Add complainant verification, Data Principal response, closure
+acknowledgment, escalation path, exhaustion outcome, Board-complaint
+route in notices, and retention policy for descriptions/notes.</td>
+</tr>
+<tr>
+<td>Section 14</td>
+<td>Allow nomination to exercise rights on death/incapacity.</td>
+<td>Partial</td>
+<td><code>person_nomination</code> stores principal/nominee, status,
+relationship, supporting-document references, invocation approval.</td>
+<td>Strong starting structure. Add nominee identity verification,
+incapacity/death evidence handling, access scope, and a
+retention/erasure policy for nominated-party data.</td>
+</tr>
+<tr>
+<td>Section 16</td>
+<td>Cross-border transfers are permitted except to restricted countries
+notified by Central Government.</td>
+<td>Gap</td>
+<td>No destination/recipient/transfer fields.</td>
+<td>Maintain a transfer register for each processor/recipient, storage
+region, support-access location, and data category. Monitor future
+Central Government restrictions.</td>
+</tr>
+<tr>
+<td>Section 8(1); Rule 16</td>
+<td>Contract with Data Processors and include required
+processing/security/deletion terms.</td>
+<td>Gap</td>
+<td>No processor/vendor/DPA table.</td>
+<td>Maintain a processor register including purpose, categories,
+locations, sub-processors, DPA date, security commitments,
+deletion/return instructions, audit rights, and breach-notification
+commitment.</td>
+</tr>
+<tr>
+<td>Section 10; Rule 13</td>
+<td>Additional DPO, DPIA and independent-audit obligations if designated
+as an SDF.</td>
+<td>Not evidenced</td>
+<td>None.</td>
+<td>If designated, appoint an India-resident DPO and maintain DPIA/audit
+registers. SDF designation depends on Central Government
+notification.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-schema-specific-observations">4. Schema-specific
+observations</h2>
+<h3 id="41-consent_ledger-useful-foundation-but-not-a-legally-complete-consent-history">4.1
+<code>consent_ledger</code>: useful foundation, but not a legally
+complete consent history</h3>
+<p><strong>Positive elements</strong></p>
+<ul>
+<li>Purpose and notice-version references are present.</li>
+<li>Grant, withdrawal, validity and expiry values are represented.</li>
+<li>Granted and declined data-field sets are retained.</li>
+</ul>
+<p><strong>Material issues</strong></p>
+<ol type="1">
+<li><code>UNIQUE (conv_id, purpose_id)</code> permits only one row per
+Data Principal and purpose. A later fresh consent cannot be
+independently recorded after withdrawal.</li>
+<li><code>person.consent_id</code> is a single ambiguous pointer while a
+person can have multiple purpose-specific consent events. It has no
+foreign-key constraint.</li>
+<li>There is no field for capture channel, affirmative action, consent
+language/locale, verification method, guardian identity, guardian
+authority, or withdrawal reason.</li>
+<li>The schema does not show whether consent was conditioned on a
+service, which must be considered under Section 6.</li>
+</ol>
+<p><strong>Target design</strong></p>
+<p>Use an immutable <code>consent_event</code> table and a derived
+current-state table:</p>
+<pre class="text"><code>consent_event
+  consent_event_id
+  person_ref
+  purpose_id
+  notice_version_id
+  event_type                 GRANTED | WITHDRAWN | EXPIRED | RECONFIRMED
+  event_at
+  capture_channel            PORTAL | OTP | PAPER | EMAIL | SMS
+  consent_scope
+  guardian_person_ref        nullable
+  guardian_relationship      nullable
+  guardian_verification_ref  nullable
+  evidence_document_id       nullable
+  actor_ref                  nullable
+  supersedes_event_id        nullable
+
+consent_current_state
+  person_ref
+  purpose_id
+  current_consent_event_id
+  status
+  effective_from
+  effective_to</code></pre>
+<h3 id="42-person_biometric_vault-highest-priority-remediation">4.2
+<code>person_biometric_vault</code>: highest-priority remediation</h3>
+<p>The schema holds fingerprint templates, binary images, face
+identifiers, image paths, DOB-validation values, and a key reference in
+one ordinary application database.</p>
+<p>Required actions:</p>
+<ol type="1">
+<li>Move biometric storage to a separately permissioned biometric
+vault/schema/database.</li>
+<li>Store authenticated ciphertext, algorithm, key reference, nonce/IV
+and authentication-tag metadata; do not rely on <code>BLOB</code> or
+<code>VARBINARY</code> as protection.</li>
+<li>Link each biometric record to the governing purpose and consent
+event through validated constraints.</li>
+<li>Restrict all reads, exports and decryptions; log them in a
+tamper-evident access log.</li>
+<li>Define a strict retention/purge schedule and test its
+execution.</li>
+<li>Remove raw biometric templates/images from application logs,
+exports, support tooling and non-essential backups.</li>
+</ol>
+<h3 id="43-satsang_community-profile-over-collection-and-duplication-risk">4.3
+<code>satsang_community</code>: profile over-collection and duplication
+risk</h3>
+<p>This table mixes identity, family, address, contact, caste,
+employment, education, participation, photo, government-ID and document
+references. This creates broad access and broad erasure risk.</p>
+<p>Split it into purpose-bound tables:</p>
+<ul>
+<li><code>person_contact</code>;</li>
+<li><code>person_address</code>;</li>
+<li><code>person_relationship</code>;</li>
+<li><code>person_membership_profile</code>;</li>
+<li><code>government_identifier</code>;</li>
+<li><code>privacy_document_locator</code>.</li>
+</ul>
+<p>Do not retain a government ID, photo, qualification proof, or full
+address simply because a membership record remains active; document the
+specific purpose, lawful basis and retention need.</p>
+<h3 id="44-change_history-and-compliance_audit_log-auditability-is-good-but-audit-copies-are-still-pi">4.4
+<code>change_history</code> and <code>compliance_audit_log</code>:
+auditability is good, but audit copies are still PI</h3>
+<p><code>change_history.prev_value</code> and <code>new_value</code>,
+and <code>compliance_audit_log.prev_state</code>/<code>new_state</code>,
+can retain a second copy of every profile field indefinitely.</p>
+<p>Recommended split:</p>
+<pre class="text"><code>operational_audit_event
+  event_id, action, aggregate_ref, actor_ref, from_status, to_status,
+  occurred_at, integrity_hash
+
+privacy_audit_detail
+  event_id, encrypted_changed_values, encrypted_remarks,
+  retention_class, erase_at</code></pre>
+<p>A hash chain is useful, but <code>hash_signature CHAR(64)</code>
+should be a real HMAC or digital-signature scheme with key custody
+outside the application database—not merely an unhashed or unsalted
+digest.</p>
+<h3 id="45-rights-and-grievance-structures-are-promising-but-incomplete">4.5
+Rights and grievance structures are promising but incomplete</h3>
+<p><code>data_principal_rights_request</code>,
+<code>grievance_ticket</code>, and <code>person_nomination</code> are
+strong foundations for Sections 11–14.</p>
+<p>Add fields or companion tables for:</p>
+<ul>
+<li>requester identity verification;</li>
+<li>authorised nominee/guardian verification;</li>
+<li>systems searched;</li>
+<li>response/export document reference;</li>
+<li>correction/erasure action results;</li>
+<li>legal-retention exception and review date;</li>
+<li>Data Principal notification evidence;</li>
+<li>Board escalation/exhaustion status.</li>
+</ul>
+<p>The current <code>retain_until</code> fields are not sufficient by
+themselves. Each retention period needs a documented purpose and, if
+applicable, a legal-retention authority.</p>
+<hr />
+<h2 id="5-priority-remediation-plan">5. Priority remediation plan</h2>
+<h3 id="priority-0--immediate-securityrisk-containment">Priority 0 —
+immediate security/risk containment</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restrict access to <code>person_biometric_vault</code> to a
+dedicated service account and security-admin role.</td>
+<td>Biometric templates/images present the highest disclosure
+impact.</td>
+</tr>
+<tr>
+<td>Verify that biometric blobs, Aadhaar/national-ID values, document
+references and JSON payloads are encrypted using managed keys.</td>
+<td>Current SQL types do not prove encryption.</td>
+</tr>
+<tr>
+<td>Stop placing raw PI in generic JSON, audit state, error, and log
+fields.</td>
+<td>These fields bypass normal access and erasure controls.</td>
+</tr>
+<tr>
+<td>Audit database users, application grants, backup access,
+object-storage access and export paths.</td>
+<td>Section 8 / Rule 7 safeguards cannot be evidenced from table
+definitions.</td>
+</tr>
+<tr>
+<td>Create an incident/breach procedure and 72-hour notification
+workflow.</td>
+<td>Required for Rule 6 readiness.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-1--make-purpose-consent-and-child-controls-defensible">Priority
+1 — make purpose, consent and child controls defensible</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a processing/purpose register linked to
+<code>purpose_master</code>.</td>
+<td>Every processing activity has purpose, lawful basis, data
+categories, recipient, retention and owner.</td>
+</tr>
+<tr>
+<td>Replace the one-row <code>consent_ledger</code> design with
+immutable consent events plus current state.</td>
+<td>Supports withdrawal and fresh re-consent without losing
+evidence.</td>
+</tr>
+<tr>
+<td>Link minor consent to verified guardian identity, authority,
+verification method, notice version and evidence.</td>
+<td>Addresses Section 9 and Rules 10/12.</td>
+</tr>
+<tr>
+<td>Review actual notice documents referenced by
+<code>notice_consent_text</code> against Rule 3.</td>
+<td>Confirms the database’s versioning mechanism contains compliant
+content.</td>
+</tr>
+<tr>
+<td>Define and implement an adulthood-transition process.</td>
+<td>Historic guardian consent should not silently become an adult’s
+continuing consent.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-2--normalise-and-protect-high-risk-profile-data">Priority 2
+— normalise and protect high-risk profile data</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split <code>satsang_community</code> into profile, contact, address,
+relationship, document and government-ID tables.</td>
+<td>Field-level access, retention and deletion become possible.</td>
+</tr>
+<tr>
+<td>Put biometrics in a separate vault.</td>
+<td>Strong isolation and reduced breach blast radius.</td>
+</tr>
+<tr>
+<td>Put login/security data in a separate restricted security
+schema.</td>
+<td>Password/IP data is isolated from broad profile access.</td>
+</tr>
+<tr>
+<td>Introduce <code>person_ref</code> as a non-semantic internal
+identifier.</td>
+<td>Operational systems can work without names, mobile numbers or legacy
+<code>conv_id</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-3--implement-erasure-as-a-controlled-process">Priority
+3 — implement erasure as a controlled process</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add <code>erasure_case</code> and <code>erasure_item</code>.</td>
+<td>A single case tracks all locations holding a Data Principal’s
+data.</td>
+</tr>
+<tr>
+<td>Add immediate suppression controls.</td>
+<td>Stops profile lookup, card use, document access, exports and
+integration publication before deletion completes.</td>
+</tr>
+<tr>
+<td>Track database records, object-store files/versions, processors,
+caches, logs, archive tables and backup-expiry obligations.</td>
+<td>Supports a defensible Section 6(4)/Section 8 erasure process.</td>
+</tr>
+<tr>
+<td>Replace retained free-text erasure reasons with controlled codes
+where feasible.</td>
+<td>Minimises residual PI after deletion.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="priority-4--processor-transfer-and-governance-evidence">Priority
+4 — processor, transfer and governance evidence</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a processor/DPA register.</td>
+<td>Supports Section 8(1) and Rule 16 vendor governance.</td>
+</tr>
+<tr>
+<td>Create a data-transfer register.</td>
+<td>Supports Section 16 monitoring and future restriction controls.</td>
+</tr>
+<tr>
+<td>Create security-control, DPIA and audit evidence registers.</td>
+<td>Demonstrates Section 8 / Rule 7 safeguards; supports SDF readiness
+if designated.</td>
+</tr>
+<tr>
+<td>Establish a Data Principal rights/grievance operating
+procedure.</td>
+<td>Produces repeatable evidence for Sections 11–14 and Rule 17.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-suggested-target-classification-after-remediation">6.
+Suggested target classification after remediation</h2>
+<table>
+<thead>
+<tr>
+<th>Data zone</th>
+<th>Examples</th>
+<th>Access expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reference / operational</strong></td>
+<td><code>code_master</code>, <code>location</code>, <code>role</code>,
+generic policy versions, generic workflow states</td>
+<td>Broad application read access where justified.</td>
+</tr>
+<tr>
+<td><strong>Pseudonymous operational</strong></td>
+<td>Opaque <code>person_ref</code>, status, category, branch code,
+workflow timestamps, card lifecycle state</td>
+<td>Restricted application access; still treated as personal data while
+linkable.</td>
+</tr>
+<tr>
+<td><strong>Privacy profile</strong></td>
+<td>Names, DOB, contacts, addresses, family relationships, caste,
+membership profile, education/employment</td>
+<td>Privacy-service access only; encrypted and purpose-scoped.</td>
+</tr>
+<tr>
+<td><strong>High-risk privacy</strong></td>
+<td>Government IDs, health, income, children’s records, guardian
+evidence, photos, documents</td>
+<td>Narrower role access, encryption, detailed access logging,
+shorter/explicit retention.</td>
+</tr>
+<tr>
+<td><strong>Biometric vault</strong></td>
+<td>Fingerprint templates, facial material, biometric identifiers</td>
+<td>Dedicated service/database, strongest access controls, independently
+monitored.</td>
+</tr>
+<tr>
+<td><strong>Security data</strong></td>
+<td>Password hashes, IPs, session/device metadata, card identifiers</td>
+<td>Dedicated security access and short retention.</td>
+</tr>
+<tr>
+<td><strong>Compliance evidence</strong></td>
+<td>Consent events, rights/grievance cases, erasure cases, minimal audit
+headers</td>
+<td>Controlled access; detailed PI separated from minimal audit
+evidence.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-evidence-still-required-before-claiming-compliance">7.
+Evidence still required before claiming compliance</h2>
+<p>The schema alone cannot demonstrate compliance. Before a DPDP
+compliance claim, obtain and review:</p>
+<ol type="1">
+<li>The actual notice/consent documents referenced by
+<code>notice_consent_text</code>.</li>
+<li>Screenshots and code paths showing consent capture and
+withdrawal.</li>
+<li>Guardian-verification workflow and evidence for child records.</li>
+<li>Encryption, KMS, key rotation, database grants, MFA and logging
+architecture.</li>
+<li>Retention schedule and legal/purpose basis for every major data
+category.</li>
+<li>S3/document-store design, object-version deletion process and backup
+lifecycle.</li>
+<li>Data Processor contracts and sub-processor/transfer inventory under
+Rule 16.</li>
+<li>Breach response procedure, Board/Data Principal templates and
+72-hour test results under Rule 6.</li>
+<li>Rights-request and grievance SOPs, including response evidence and
+escalation handling.</li>
+<li>DPIA, DPO and independent-audit governance if the organisation is
+designated as an SDF under Section 10 and Rule 13.</li>
+</ol>
+<hr />
+<h2 id="final-assessment">Final assessment</h2>
+<p><code>rsdpdp_db</code> is a promising compliance-oriented schema,
+especially because it already includes purpose records, notice versions,
+consent status, rights requests, grievances, nominations, guardian
+relationships, maker/checker controls, audit hashes and some purge
+fields.</p>
+<p>Its current architecture is nevertheless <strong>not sufficient to
+establish DPDPA compliance</strong>. The most material remediation
+priorities are:</p>
+<ol type="1">
+<li>redesign consent as an immutable event history;</li>
+<li>build verifiable guardian consent and child-data controls;</li>
+<li>isolate and harden biometrics and government identifiers;</li>
+<li>replace broad profile/JSON tables with purpose-bound protected
+stores;</li>
+<li>implement central, cross-system suppression and erasure; and</li>
+<li>add governance for processors, breaches, security evidence and
+cross-border transfers.</li>
+</ol>
+</main>
+<script>
+(() => {
+  const chips = [...document.querySelectorAll('.filter-chip')];
+  const search = document.querySelector('#report-search');
+  const result = document.querySelector('#report-status');
+  const allRows = [...document.querySelectorAll('table tr')].filter(row => row.querySelector('td'));
+  let activeFilter = 'all';
+
+  const rowStatus = row => {
+    const text = row.textContent.toLowerCase();
+    if (text.includes('material gap') || text.includes('not evidenced') || /\bgap\b/.test(text)) return 'priority';
+    if (text.includes('partial')) return 'partial';
+    if (text.includes('strong')) return 'positive';
+    return 'neutral';
+  };
+
+  allRows.forEach(row => row.classList.add(`status-${rowStatus(row)}`));
+
+  function applyFilters() {
+    const term = search.value.trim().toLowerCase();
+    let visible = 0;
+    let filterable = 0;
+    allRows.forEach(row => {
+      const status = rowStatus(row);
+      const hasStatus = status !== 'neutral';
+      const statusMatch = activeFilter === 'all' || (activeFilter === 'priority' && status === 'priority') || (activeFilter === 'partial' && status === 'partial');
+      const textMatch = !term || row.textContent.toLowerCase().includes(term);
+      const display = (!hasStatus || statusMatch) && textMatch;
+      row.classList.toggle('is-filtered', !display);
+      if (hasStatus || term) { filterable += 1; if (display) visible += 1; }
+    });
+    const label = activeFilter === 'all' ? 'all assessed findings' : activeFilter === 'priority' ? 'priority gaps' : 'partial-alignment findings';
+    result.textContent = term ? `Showing ${visible} matching rows for “${search.value}”.` : `Showing ${label}.`;
+  }
+
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    activeFilter = chip.dataset.filter;
+    chips.forEach(item => item.setAttribute('aria-pressed', String(item === chip)));
+    applyFilters();
+  }));
+  search.addEventListener('input', applyFilters);
+
+  document.querySelectorAll('.issue-card').forEach(card => card.addEventListener('click', () => {
+    const target = document.getElementById(card.dataset.target);
+    if (!target) return;
+    target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    target.classList.remove('focus-section');
+    requestAnimationFrame(() => target.classList.add('focus-section'));
+    window.setTimeout(() => target.classList.remove('focus-section'), 1500);
+  }));
+
+  document.querySelector('#print-report').addEventListener('click', () => window.print());
+})();
+</script>
+</body>
+</html>
